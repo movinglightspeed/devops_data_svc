@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Retrieve source from github. run npm install and npm test' 
                 git branch: 'main',
-                    url: 'https://github.com/Zinny/devops_data_svc.git'
+                    url: 'https://github.com/movinglightspeed/devops_data_svc.git'
                 echo 'repo files'
                 sh 'ls -a'
                 echo 'install dependencies'
@@ -81,7 +81,7 @@ pipeline {
                     }
             steps {
                 echo 'Get cluster credentials'
-                sh 'gcloud container clusters get-credentials cinny-app-cluster --zone us-west1-b --project inlaid-stack-352300'
+                sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
                 sh "kubectl set image deployment/devops-data-svc data-svc-container=${env.imageName}:${env.BUILD_ID}"
               }
             }       
