@@ -18,6 +18,7 @@ pipeline {
                 }
             }
             steps {
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                 echo 'Retrieve source from github. run npm install and npm test' 
                 git branch: 'main',
                     url: 'https://github.com/movinglightspeed/devops_data_svc.git'
@@ -28,6 +29,7 @@ pipeline {
                 echo 'Run tests'
                 sh 'npm test'
                 echo 'Testing completed'
+                }
             }
         }
         stage('SonarQube analysis') {
