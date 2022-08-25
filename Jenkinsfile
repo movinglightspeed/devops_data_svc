@@ -22,7 +22,7 @@ pipeline {
             }
             steps {
                 script {
-                    System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"); 
+                    System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true"); 
                 }
                 echo "PATH is: ${env.PATH}"
                 echo 'Retrieve source from github. run npm install and npm test' 
