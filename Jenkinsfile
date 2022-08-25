@@ -7,6 +7,7 @@ pipeline {
         registryCredential = 'dockerhub'
         imageName = 'stanleys/internalapp'
         dockerImage = ''
+        PATH = "/usr/sbin:/usr/bin:/sbin:/bin:${env.PATH}"
         }
     stages {
         stage('Run the tests') {
@@ -20,7 +21,10 @@ pipeline {
                 }
             }
             steps {
-                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                script {
+                    System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"); 
+                }
+                echo "PATH is: ${env.PATH}"
                 echo 'Retrieve source from github. run npm install and npm test' 
                 git branch: 'main',
                     url: 'https://github.com/movinglightspeed/devops_data_svc.git'
@@ -30,8 +34,7 @@ pipeline {
                 sh 'npm install'
                 echo 'Run tests'
                 sh 'npm test'
-                echo 'Testing completed'
-                }
+                echo 'Testing completed'   
             }
         }
         stage('SonarQube analysis') {
