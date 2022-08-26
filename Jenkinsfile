@@ -26,9 +26,9 @@ pipeline {
                 git branch: 'main',
                     url: 'https://github.com/movinglightspeed/devops_data_svc.git'
                 echo 'repo files'
-                sh "ls -a"
+                sh 'ls -a'
                 echo 'install dependencies'
-                sh "npm install"
+                sh 'npm install'
                 echo 'Run tests'
                 sh 'npm test'
                 echo 'Testing completed'   
