@@ -26,11 +26,11 @@ pipeline {
                 git branch: 'main',
                     url: 'https://github.com/movinglightspeed/devops_data_svc.git'
                 echo 'repo files'
-                sh -c 'ls -a'
+                sh '-c' 'ls -a'
                 echo 'install dependencies'
-                sh -c 'npm install'
+                sh '-c' 'npm install'
                 echo 'Run tests'
-                sh -c 'npm test'
+                sh '-c' 'npm test'
                 echo 'Testing completed'   
             }
         }
