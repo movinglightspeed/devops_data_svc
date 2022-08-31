@@ -86,6 +86,7 @@ pipeline {
             steps {
                 echo 'Get cluster credentials'
                 withEnv(['GCLOUD_PATH=/usr/lib/google-cloud-sdk/bin']) {
+                    sh '$GCLOUD_PATH/gcloud config set account 757403580377-compute@developer.gserviceaccount.com'
                     sh '$GCLOUD_PATH/gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
                 }
                 sh "kubectl set image deployment/devops-data-svc data-svc-container=${env.imageName}:${env.BUILD_ID}"
