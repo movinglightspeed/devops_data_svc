@@ -85,7 +85,7 @@ pipeline {
                     }
             steps {
                 echo 'Get cluster credentials'
-                sh 'sudo gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
+                sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
                 sh "kubectl set image deployment/devops-data-svc data-svc-container=${env.imageName}:${env.BUILD_ID}"
               }
             }       
