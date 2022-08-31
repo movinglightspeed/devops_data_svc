@@ -78,23 +78,22 @@ pipeline {
          stage('deploy to k8s') {
              agent {
                 docker { 
-                    image 'google/cloud-sdk:latest'
+                    image 'ubuntu:latest'
                     args '-u root'          
-                    args '-e HOME=/tmp'
                     reuseNode true
                     alwaysPull true
                         }
                     }
             steps {
                 echo 'Get cluster credentials'
-                withEnv(['GCLOUD_PATH=/usr/lib/google-cloud-sdk/bin']) {
-                    sh 'cd /usr/lib/google-cloud-sdk/bin/'
-                    sh 'pwd'
-                    sh 'whoami'
-                    sh '$GCLOUD_PATH/gcloud auth activate-service-account ${gaccount} --key-file=devopsbootcamp-355721-d2c37704b9c8.json'
-                    sh '$GCLOUD_PATH/gcloud config set account ${gaccount}'
-                    sh '$GCLOUD_PATH/gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
-                }
+                sh 'pwd'
+                sh 'apt-get install apt-transport-https ca-certificates gnupg -y'
+                sh 'echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-cli -y'
+                sh 'apt-get install google-cloud-sdk-gke-gcloud-auth-plugin -y'
+                sh 'whoami'
+                sh 'gcloud auth activate-service-account ${gaccount} --key-file=devopsbootcamp-355721-d2c37704b9c8.json'
+                sh 'gcloud config set account ${gaccount}'
+                sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
                 sh "kubectl set image deployment/devops-data-svc data-svc-container=${env.imageName}:${env.BUILD_ID}"
               }
             }       
