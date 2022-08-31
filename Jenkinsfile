@@ -94,6 +94,7 @@ pipeline {
                 sh 'curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -'
                 sh 'apt-get update -y && apt-get install google-cloud-cli -y'      
                 sh 'apt-get install google-cloud-sdk-gke-gcloud-auth-plugin -y'
+                sh 'apt-get install -y kubectl'
                 sh 'gcloud auth activate-service-account ${gaccount} --key-file=devopsbootcamp-355721-d2c37704b9c8.json'
                 sh 'gcloud config set account ${gaccount}'
                 sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
