@@ -86,11 +86,12 @@ pipeline {
                     }
             steps {
                 echo 'Get cluster credentials'
-                sh 'pwd'
-                sh 'apt-get install apt-transport-https ca-certificates gnupg -y'
+                sh 'pwd && whoami'
+                sh 'rm -rf /etc/apt/trusted.gpg.d/*'
+                sh 'apt --fix-broken install -y'
+                sh 'apt-get update && apt-get upgrade && apt-get install apt-transport-https ca-certificates gnupg -y'
                 sh 'echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-cli -y'
                 sh 'apt-get install google-cloud-sdk-gke-gcloud-auth-plugin -y'
-                sh 'whoami'
                 sh 'gcloud auth activate-service-account ${gaccount} --key-file=devopsbootcamp-355721-d2c37704b9c8.json'
                 sh 'gcloud config set account ${gaccount}'
                 sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
