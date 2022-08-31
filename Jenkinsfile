@@ -88,6 +88,7 @@ pipeline {
                 echo 'Get cluster credentials'
                 sh 'pwd && whoami'
                 sh 'rm -rf /etc/apt/trusted.gpg.d/*'
+                sh 'apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C'
                 sh 'apt --fix-broken install -y'
                 sh 'apt-get update && apt-get upgrade && apt-get install apt-transport-https ca-certificates gnupg -y'
                 sh 'echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-cli -y'
