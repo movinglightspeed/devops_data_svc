@@ -87,9 +87,9 @@ pipeline {
                 echo 'Get cluster credentials'
                 withEnv(['GCLOUD_PATH=/usr/lib/google-cloud-sdk/bin']) {
                     sh 'cd /usr/lib/google-cloud-sdk/bin/'
-                    sh 'ls -l'
                     sh 'pwd'
                     sh '$GCLOUD_PATH/gcloud auth activate-service-account ${gaccount} --key-file=devopsbootcamp-355721-d2c37704b9c8.json'
+                    sh 'apt-get install google-cloud-sdk-gke-gcloud-auth-plugin'
                     sh '$GCLOUD_PATH/gcloud config set account ${gaccount}'
                     sh '$GCLOUD_PATH/gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
                 }
