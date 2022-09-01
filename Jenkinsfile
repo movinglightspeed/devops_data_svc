@@ -98,7 +98,7 @@ pipeline {
                 sh 'gcloud auth activate-service-account ${gaccount} --key-file=devopsbootcamp-355721-d2c37704b9c8.json'
                 sh 'gcloud config set account ${gaccount}'
                 sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project devopsbootcamp-355721'
-                sh 'kubectl create deployment devops-data-svc --image=${env.imageName}:${env.BUILD_ID}'
+                sh "kubectl create deployment devops-data-svc --image=${env.imageName}:${env.BUILD_ID}"
               }
             }       
         stage('Remove local docker images') {
